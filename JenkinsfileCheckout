@@ -3,10 +3,14 @@ pipeline {
 
     stages {
         stage('Checkout') {
+          steps {
           checkout([$class: 'GitSCM', branches: [[name: '*/featurebranch']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/durgasai/kuberneteslearning.git']]])
         }
+        }
         stage('Display Contents') {
+        steps {
           sh 'echo This is DevOps Training'
+          }
         }
     }
 }
