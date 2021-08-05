@@ -1,0 +1,12 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Checkout') {
+          checkout([$class: 'GitSCM', branches: [[name: '*/featurebranch']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/durgasai/kuberneteslearning.git']]])
+        }
+        stage('Display Contents') {
+          sh 'echo This is DevOps Training'
+        }
+    }
+}
