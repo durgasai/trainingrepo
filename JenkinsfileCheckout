@@ -9,7 +9,7 @@ pipeline {
         }
         stage('Display Contents') {
         steps {
-          sh 'echo This is DevOps Training'
+          sh 'ls'
           }
         }
     }
