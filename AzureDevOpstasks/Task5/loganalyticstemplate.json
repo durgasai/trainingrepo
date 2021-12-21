@@ -1,0 +1,24 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "workspaceName": {
+      "type": "string",
+      "minLength": 3,
+      "maxLength": 24
+    }
+  },
+  "resources": [
+    {
+      "name": "[parameters('workspaceName')]",
+      "type": "Microsoft.OperationalInsights/workspaces",
+      "apiVersion": "2020-03-01-preview",
+      "location": "East US",
+      "properties": {
+        "sku": {
+          "name": "PerGB2018"
+        }
+      }
+    }
+  ]
+}

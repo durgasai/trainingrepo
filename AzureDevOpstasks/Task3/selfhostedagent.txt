@@ -1,0 +1,2 @@
+Create a linux VM and follow the following document in setting up agent
+https://docs.microsoft.com/en-us/azure/devops/pipelines/agents/v2-linux?view=azure-devops

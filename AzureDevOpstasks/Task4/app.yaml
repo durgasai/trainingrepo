@@ -1,0 +1,43 @@
+parameters:
+  - name: rgame
+    displayName: "Resource Group"
+    type: string
+  - name: location
+    displayName: "Location"
+    type: string
+    default: East US
+    values:
+      - East US
+      - East US 2
+      - West US
+      - Centeal US
+  - name: appname
+    displayName: "App Name"
+    type: string
+resources:
+  repositories:
+    - repository: VariableGroup
+      type: git
+      name: VariableGroup
+      ref: develop
+variables:
+  - template: commonvariable.yaml@VariableGroup
+trigger: none
+pool:
+  vmimage: ubuntu-16.04
+steps:
+  - checkout: self
+  - checkout: VariableGroup
+  - script : |
+      echo '-webAppName "${{parameters.appname}}" -location "${{parameters.location}}"'
+      echo "serviceconnectionname $(serviceconnectionname)"
+  - task: AzureResourceManagerTemplateDeployment@3
+    displayName: 'ARM Template deployment: Resource Group scope'
+    inputs:
+      azureResourceManagerConnection: $(serviceconnectionname)
+      action: Create Or Update Resource Group
+      resourceGroupName: ${{parameters.rgame}}
+      location: ${{parameters.location}}
+      templateLocation: "Linked artifact"
+      csmFile: '$(System.DefaultWorkingDirectory)/AzureDevOpsTasks/Task4/apptemplate.json'
+      overrideParameters: '-webAppName "${{parameters.appname}}" -location "${{parameters.location}}"'
